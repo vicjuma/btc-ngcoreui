@@ -4,6 +4,9 @@ import { BASE_URL } from '../types/constants';
 import { GetNetworkInfoResponse } from '../types/get-network-info.interface';
 import { Observable } from 'rxjs';
 import { GetBlockchainInfoResponse } from '../types/get-blockchain-info.interface';
+import { GetBestBlockHashResponse } from '../types/get-best-block-hash.interface';
+import { GetBlockCountResponse } from '../types/get-block-count.interface';
+import { GetConnectionCountResponse } from '../types/get-connection-count.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,5 +20,17 @@ export class BlockchainService {
 
   getBlockchainInfo(): Observable<GetBlockchainInfoResponse> {
     return this.http.get<GetBlockchainInfoResponse>(`${BASE_URL}/getblockchaininfo`);
+  }
+
+  getBestBlockHash(): Observable<GetBestBlockHashResponse> {
+    return this.http.get<GetBestBlockHashResponse>(`${BASE_URL}/getbestblockhash`);
+  }
+
+  getBlockCount(): Observable<GetBlockCountResponse> {
+    return this.http.get<GetBlockCountResponse>(`${BASE_URL}/getblockcount`);
+  }
+
+  getConnectionCount(): Observable<GetConnectionCountResponse> {
+    return this.http.get<GetConnectionCountResponse>(`${BASE_URL}/getconnectioncount`);
   }
 }
