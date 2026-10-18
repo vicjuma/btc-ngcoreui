@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { EncryptWalletRequest, EncryptWalletResponse } from '../types/encrypt-wallet.interface';
 import { GetWalletInfoResponse } from '../types/get-wallet-info.interface';
+import { GetBalancesResponse } from '../types/get-balances.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +23,9 @@ export class WalletService {
 
   getWalletInfo(): Observable<GetWalletInfoResponse> {
     return this.http.get<GetWalletInfoResponse>(`${BASE_URL}/getwalletinfo`);
+  }
+
+  getBalances(): Observable<GetBalancesResponse> {
+    return this.http.get<GetBalancesResponse>(`${BASE_URL}/getbalances`);
   }
 }
