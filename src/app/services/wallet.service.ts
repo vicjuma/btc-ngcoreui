@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { EncryptWalletRequest, EncryptWalletResponse } from '../types/encrypt-wallet.interface';
 import { GetWalletInfoResponse } from '../types/get-wallet-info.interface';
 import { GetBalancesResponse } from '../types/get-balances.interface';
+import { ListWalletsResponse } from '../types/list-wallets.interface';
+import { ListWalletDirResponse } from '../types/list-wallet-dir.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +29,13 @@ export class WalletService {
 
   getBalances(): Observable<GetBalancesResponse> {
     return this.http.get<GetBalancesResponse>(`${BASE_URL}/getbalances`);
+  }
+
+  listWallets(): Observable<ListWalletsResponse> {
+    return this.http.get<ListWalletsResponse>(`${BASE_URL}/listwallets`);
+  }
+
+  listWalletDir(): Observable<ListWalletDirResponse> {
+    return this.http.get<ListWalletDirResponse>(`${BASE_URL}/listwalletdir`);
   }
 }
