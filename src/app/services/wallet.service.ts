@@ -12,6 +12,7 @@ import {
   CreateWalletDescriptorRequest,
   CreateWalletDescriptorResponse,
 } from '../types/create-wallet-descriptor.interface';
+import { ListDescriptorsResponse } from '../types/list-descriptors.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +43,12 @@ export class WalletService {
 
   getBalances(): Observable<GetBalancesResponse> {
     return this.http.get<GetBalancesResponse>(`${BASE_URL}/getbalances`);
+  }
+
+  listDescriptors(privateProp = false): Observable<ListDescriptorsResponse> {
+    return this.http.get<ListDescriptorsResponse>(`${BASE_URL}/listdescriptors`, {
+      params: { private: privateProp },
+    });
   }
 
   listWallets(): Observable<ListWalletsResponse> {
