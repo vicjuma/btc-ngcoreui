@@ -13,6 +13,12 @@ import {
   CreateWalletDescriptorResponse,
 } from '../types/create-wallet-descriptor.interface';
 import { ListDescriptorsResponse } from '../types/list-descriptors.interface';
+import { GetHdKeysRequest, GetHdKeysResponseItem } from '../types/get-hd-keys.interface';
+import { DeriveHdKeyRequest, DeriveHdKeyResponse } from '../types/derive-hd-key.interface';
+import {
+  DeriveAddressesRequest,
+  DeriveAddressesResponse,
+} from '../types/derive-addresses.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -33,16 +39,28 @@ export class WalletService {
     );
   }
 
+  deriveAddresses(request: DeriveAddressesRequest): Observable<DeriveAddressesResponse> {
+    return this.http.post<DeriveAddressesResponse>(`${BASE_URL}/deriveaddresses`, request);
+  }
+
+  deriveHdKey(request: DeriveHdKeyRequest): Observable<DeriveHdKeyResponse> {
+    return this.http.post<DeriveHdKeyResponse>(`${BASE_URL}/derivehdkey`, request);
+  }
+
   encryptWallet(request: EncryptWalletRequest): Observable<EncryptWalletResponse> {
     return this.http.post<EncryptWalletResponse>(`${BASE_URL}/encryptwallet`, request);
   }
 
-  getWalletInfo(): Observable<GetWalletInfoResponse> {
-    return this.http.get<GetWalletInfoResponse>(`${BASE_URL}/getwalletinfo`);
-  }
-
   getBalances(): Observable<GetBalancesResponse> {
     return this.http.get<GetBalancesResponse>(`${BASE_URL}/getbalances`);
+  }
+
+  getHdKeys(request: GetHdKeysRequest = {}): Observable<GetHdKeysResponseItem[]> {
+    return this.http.post<GetHdKeysResponseItem[]>(`${BASE_URL}/gethdkeys`, request);
+  }
+
+  getWalletInfo(): Observable<GetWalletInfoResponse> {
+    return this.http.get<GetWalletInfoResponse>(`${BASE_URL}/getwalletinfo`);
   }
 
   listDescriptors(privateProp = false): Observable<ListDescriptorsResponse> {
