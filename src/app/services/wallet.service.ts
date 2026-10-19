@@ -8,6 +8,10 @@ import { GetWalletInfoResponse } from '../types/get-wallet-info.interface';
 import { GetBalancesResponse } from '../types/get-balances.interface';
 import { ListWalletsResponse } from '../types/list-wallets.interface';
 import { ListWalletDirResponse } from '../types/list-wallet-dir.interface';
+import {
+  CreateWalletDescriptorRequest,
+  CreateWalletDescriptorResponse,
+} from '../types/create-wallet-descriptor.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +21,15 @@ export class WalletService {
 
   createWallet(request: CreateWalletRequest): Observable<CreateWalletResponse> {
     return this.http.post<CreateWalletResponse>(`${BASE_URL}/createwallet`, request);
+  }
+
+  createWalletDescriptor(
+    request: CreateWalletDescriptorRequest,
+  ): Observable<CreateWalletDescriptorResponse> {
+    return this.http.post<CreateWalletDescriptorResponse>(
+      `${BASE_URL}/createwalletdescriptor`,
+      request,
+    );
   }
 
   encryptWallet(request: EncryptWalletRequest): Observable<EncryptWalletResponse> {
