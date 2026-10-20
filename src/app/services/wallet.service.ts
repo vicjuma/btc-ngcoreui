@@ -19,6 +19,11 @@ import {
   DeriveAddressesRequest,
   DeriveAddressesResponse,
 } from '../types/derive-addresses.interface';
+import { GetNewAddressRequest, GetNewAddressResponse } from '../types/get-new-address.interface';
+import {
+  GetRawChangeAddressRequest,
+  GetRawChangeAddressResponse,
+} from '../types/get-raw-change-address.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -57,6 +62,16 @@ export class WalletService {
 
   getHdKeys(request: GetHdKeysRequest = {}): Observable<GetHdKeysResponseItem[]> {
     return this.http.post<GetHdKeysResponseItem[]>(`${BASE_URL}/gethdkeys`, request);
+  }
+
+  getNewAddress(request: GetNewAddressRequest = {}): Observable<GetNewAddressResponse> {
+    return this.http.post<GetNewAddressResponse>(`${BASE_URL}/getnewaddress`, request);
+  }
+
+  getRawChangeAddress(
+    request: GetRawChangeAddressRequest = {},
+  ): Observable<GetRawChangeAddressResponse> {
+    return this.http.post<GetRawChangeAddressResponse>(`${BASE_URL}/getrawchangeaddress`, request);
   }
 
   getWalletInfo(): Observable<GetWalletInfoResponse> {
