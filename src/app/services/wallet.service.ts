@@ -24,6 +24,7 @@ import {
   GetRawChangeAddressRequest,
   GetRawChangeAddressResponse,
 } from '../types/get-raw-change-address.interface';
+import { GetAddressInfoRequest, GetAddressInfoResponse } from '../types/get-address-info.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -54,6 +55,10 @@ export class WalletService {
 
   encryptWallet(request: EncryptWalletRequest): Observable<EncryptWalletResponse> {
     return this.http.post<EncryptWalletResponse>(`${BASE_URL}/encryptwallet`, request);
+  }
+
+  getAddressInfo(request: GetAddressInfoRequest): Observable<GetAddressInfoResponse> {
+    return this.http.post<GetAddressInfoResponse>(`${BASE_URL}/getaddressinfo`, request);
   }
 
   getBalances(): Observable<GetBalancesResponse> {
