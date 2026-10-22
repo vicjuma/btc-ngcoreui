@@ -33,6 +33,14 @@ import {
   ListReceivedByLabelRequest,
   ListReceivedByLabelResponse,
 } from '../types/list-received-by-label.interface';
+import {
+  GetReceivedByAddressRequest,
+  GetReceivedByAddressResponse,
+} from '../types/get-received-by-address.interface';
+import {
+  GetReceivedByLabelRequest,
+  GetReceivedByLabelResponse,
+} from '../types/get-received-by-label.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +93,24 @@ export class WalletService {
     request: GetRawChangeAddressRequest = {},
   ): Observable<GetRawChangeAddressResponse> {
     return this.http.post<GetRawChangeAddressResponse>(`${BASE_URL}/getrawchangeaddress`, request);
+  }
+
+  getReceivedByAddress(
+    request: GetReceivedByAddressRequest,
+  ): Observable<GetReceivedByAddressResponse> {
+    return this.http.post<GetReceivedByAddressResponse>(`${BASE_URL}/getreceivedbyaddress`, {
+      address: request.address,
+      minconf: request.minconf ?? 1,
+      include_immature_coinbase: request.include_immature_coinbase ?? false,
+    });
+  }
+
+  getReceivedByLabel(request: GetReceivedByLabelRequest): Observable<GetReceivedByLabelResponse> {
+    return this.http.post<GetReceivedByLabelResponse>(`${BASE_URL}/getreceivedbylabel`, {
+      label: request.label,
+      minconf: request.minconf ?? 1,
+      include_immature_coinbase: request.include_immature_coinbase ?? false,
+    });
   }
 
   getWalletInfo(): Observable<GetWalletInfoResponse> {
