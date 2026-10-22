@@ -25,6 +25,14 @@ import {
   GetRawChangeAddressResponse,
 } from '../types/get-raw-change-address.interface';
 import { GetAddressInfoRequest, GetAddressInfoResponse } from '../types/get-address-info.interface';
+import {
+  ListReceivedByAddressRequest,
+  ListReceivedByAddressResponse,
+} from '../types/list-received-by-address.interface';
+import {
+  ListReceivedByLabelRequest,
+  ListReceivedByLabelResponse,
+} from '../types/list-received-by-label.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -86,6 +94,33 @@ export class WalletService {
   listDescriptors(privateProp = false): Observable<ListDescriptorsResponse> {
     return this.http.get<ListDescriptorsResponse>(`${BASE_URL}/listdescriptors`, {
       params: { private: privateProp },
+    });
+  }
+
+  listReceivedByAddress(
+    request: ListReceivedByAddressRequest = {},
+  ): Observable<ListReceivedByAddressResponse[]> {
+    return this.http.get<ListReceivedByAddressResponse[]>(`${BASE_URL}/listreceivedbyaddress`, {
+      params: {
+        minconf: request.minconf ?? 1,
+        include_empty: request.include_empty ?? false,
+        include_watchonly: request.include_watchonly ?? false,
+        address_filter: request.address_filter ?? '',
+        include_immature_coinbase: request.include_immature_coinbase ?? false,
+      },
+    });
+  }
+
+  listReceivedByLabel(
+    request: ListReceivedByLabelRequest = {},
+  ): Observable<ListReceivedByLabelResponse[]> {
+    return this.http.get<ListReceivedByLabelResponse[]>(`${BASE_URL}/listreceivedbylabel`, {
+      params: {
+        minconf: request.minconf ?? 1,
+        include_empty: request.include_empty ?? false,
+        include_watchonly: request.include_watchonly ?? false,
+        include_immature_coinbase: request.include_immature_coinbase ?? false,
+      },
     });
   }
 
