@@ -46,6 +46,7 @@ import {
   ListTransactionsRequest,
   ListTransactionsResponse,
 } from '../types/list-transactions.interface';
+import { GetTransactionRequest, GetTransactionResponse } from '../types/get-transaction.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -115,6 +116,14 @@ export class WalletService {
       label: request.label,
       minconf: request.minconf ?? 1,
       include_immature_coinbase: request.include_immature_coinbase ?? false,
+    });
+  }
+
+  getTransaction(request: GetTransactionRequest): Observable<GetTransactionResponse> {
+    return this.http.post<GetTransactionResponse>(`${BASE_URL}/gettransaction`, {
+      txid: request.txid,
+      include_watchonly: request.include_watchonly ?? false,
+      verbose: request.verbose ?? false,
     });
   }
 
