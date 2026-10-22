@@ -41,6 +41,11 @@ import {
   GetReceivedByLabelRequest,
   GetReceivedByLabelResponse,
 } from '../types/get-received-by-label.interface';
+import { ListSinceBlockRequest, ListSinceBlockResponse } from '../types/list-since-block.interface';
+import {
+  ListTransactionsRequest,
+  ListTransactionsResponse,
+} from '../types/list-transactions.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -150,11 +155,31 @@ export class WalletService {
     });
   }
 
-  listWallets(): Observable<ListWalletsResponse> {
-    return this.http.get<ListWalletsResponse>(`${BASE_URL}/listwallets`);
+  listSinceBlock(request: ListSinceBlockRequest = {}): Observable<ListSinceBlockResponse> {
+    return this.http.post<ListSinceBlockResponse>(`${BASE_URL}/listsinceblock`, {
+      blockhash: request.blockhash,
+      target_confirmations: request.target_confirmations ?? 1,
+      include_watchonly: request.include_watchonly ?? false,
+      include_removed: request.include_removed ?? true,
+      include_change: request.include_change ?? false,
+      label: request.label,
+    });
+  }
+
+  listTransactions(request: ListTransactionsRequest = {}): Observable<ListTransactionsResponse[]> {
+    return this.http.post<ListTransactionsResponse[]>(`${BASE_URL}/listtransactions`, {
+      label: request.label,
+      count: request.count ?? 10,
+      skip: request.skip ?? 0,
+      include_watchonly: request.include_watchonly ?? false,
+    });
   }
 
   listWalletDir(): Observable<ListWalletDirResponse> {
     return this.http.get<ListWalletDirResponse>(`${BASE_URL}/listwalletdir`);
+  }
+
+  listWallets(): Observable<ListWalletsResponse> {
+    return this.http.get<ListWalletsResponse>(`${BASE_URL}/listwallets`);
   }
 }
