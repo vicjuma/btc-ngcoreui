@@ -8,6 +8,10 @@ import { GetBestBlockHashResponse } from '../types/get-best-block-hash.interface
 import { GetBlockCountResponse } from '../types/get-block-count.interface';
 import { GetConnectionCountResponse } from '../types/get-connection-count.interface';
 import { GetTxOutRequest, GetTxOutResponse } from '../types/get-tx-out.interface';
+import {
+  GetTxSpendingPrevoutRequest,
+  GetTxSpendingPrevoutResponse,
+} from '../types/get-tx-spending-prev-out.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +44,15 @@ export class BlockchainService {
       txid: request.txid,
       n: request.n,
       include_mempool: request.include_mempool ?? true,
+    });
+  }
+
+  getTxSpendingPrevout(
+    request: GetTxSpendingPrevoutRequest,
+  ): Observable<GetTxSpendingPrevoutResponse[]> {
+    return this.http.post<GetTxSpendingPrevoutResponse[]>(`${BASE_URL}/gettxspendingprevout`, {
+      outputs: request.outputs,
+      options: request.options,
     });
   }
 }
