@@ -7,6 +7,7 @@ import { GetBlockchainInfoResponse } from '../types/get-blockchain-info.interfac
 import { GetBestBlockHashResponse } from '../types/get-best-block-hash.interface';
 import { GetBlockCountResponse } from '../types/get-block-count.interface';
 import { GetConnectionCountResponse } from '../types/get-connection-count.interface';
+import { GetTxOutRequest, GetTxOutResponse } from '../types/get-tx-out.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -14,16 +15,12 @@ import { GetConnectionCountResponse } from '../types/get-connection-count.interf
 export class BlockchainService {
   private readonly http = inject(HttpClient);
 
-  getNetworkInfo(): Observable<GetNetworkInfoResponse> {
-    return this.http.get<GetNetworkInfoResponse>(`${BASE_URL}/getnetworkinfo`);
+  getBestBlockHash(): Observable<GetBestBlockHashResponse> {
+    return this.http.get<GetBestBlockHashResponse>(`${BASE_URL}/getbestblockhash`);
   }
 
   getBlockchainInfo(): Observable<GetBlockchainInfoResponse> {
     return this.http.get<GetBlockchainInfoResponse>(`${BASE_URL}/getblockchaininfo`);
-  }
-
-  getBestBlockHash(): Observable<GetBestBlockHashResponse> {
-    return this.http.get<GetBestBlockHashResponse>(`${BASE_URL}/getbestblockhash`);
   }
 
   getBlockCount(): Observable<GetBlockCountResponse> {
@@ -32,5 +29,17 @@ export class BlockchainService {
 
   getConnectionCount(): Observable<GetConnectionCountResponse> {
     return this.http.get<GetConnectionCountResponse>(`${BASE_URL}/getconnectioncount`);
+  }
+
+  getNetworkInfo(): Observable<GetNetworkInfoResponse> {
+    return this.http.get<GetNetworkInfoResponse>(`${BASE_URL}/getnetworkinfo`);
+  }
+
+  getTxOut(request: GetTxOutRequest): Observable<GetTxOutResponse | null> {
+    return this.http.post<GetTxOutResponse | null>(`${BASE_URL}/gettxout`, {
+      txid: request.txid,
+      n: request.n,
+      include_mempool: request.include_mempool ?? true,
+    });
   }
 }
