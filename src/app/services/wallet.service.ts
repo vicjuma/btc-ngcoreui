@@ -47,6 +47,7 @@ import {
   ListTransactionsResponse,
 } from '../types/list-transactions.interface';
 import { GetTransactionRequest, GetTransactionResponse } from '../types/get-transaction.interface';
+import { ListUnspentRequest, ListUnspentResponse } from '../types/list-unpent.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -181,6 +182,16 @@ export class WalletService {
       count: request.count ?? 10,
       skip: request.skip ?? 0,
       include_watchonly: request.include_watchonly ?? false,
+    });
+  }
+
+  listUnspent(request: ListUnspentRequest = {}): Observable<ListUnspentResponse[]> {
+    return this.http.post<ListUnspentResponse[]>(`${BASE_URL}/listunspent`, {
+      minconf: request.minconf ?? 1,
+      maxconf: request.maxconf ?? 9999999,
+      addresses: request.addresses ?? [],
+      include_unsafe: request.include_unsafe ?? true,
+      query_options: request.query_options,
     });
   }
 
