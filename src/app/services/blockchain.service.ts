@@ -12,6 +12,7 @@ import {
   GetTxSpendingPrevoutRequest,
   GetTxSpendingPrevoutResponse,
 } from '../types/get-tx-spending-prev-out.interface';
+import { GetMempoolInfoResponse } from '../types/get-mempool-info.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,10 @@ export class BlockchainService {
 
   getConnectionCount(): Observable<GetConnectionCountResponse> {
     return this.http.get<GetConnectionCountResponse>(`${BASE_URL}/getconnectioncount`);
+  }
+
+  getMempoolInfo(): Observable<GetMempoolInfoResponse> {
+    return this.http.get<GetMempoolInfoResponse>(`${BASE_URL}/getmempoolinfo`);
   }
 
   getNetworkInfo(): Observable<GetNetworkInfoResponse> {
