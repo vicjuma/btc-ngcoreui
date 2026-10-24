@@ -13,6 +13,7 @@ import {
   GetTxSpendingPrevoutResponse,
 } from '../types/get-tx-spending-prev-out.interface';
 import { GetMempoolInfoResponse } from '../types/get-mempool-info.interface';
+import { GetRawMempoolRequest, GetRawMempoolResponse } from '../types/get-raw-mempool.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -42,6 +43,13 @@ export class BlockchainService {
 
   getNetworkInfo(): Observable<GetNetworkInfoResponse> {
     return this.http.get<GetNetworkInfoResponse>(`${BASE_URL}/getnetworkinfo`);
+  }
+
+  getRawMempool(request: GetRawMempoolRequest = {}): Observable<GetRawMempoolResponse> {
+    return this.http.post<GetRawMempoolResponse>(`${BASE_URL}/getrawmempool`, {
+      verbose: request.verbose ?? false,
+      mempool_sequence: request.mempool_sequence ?? false,
+    });
   }
 
   getTxOut(request: GetTxOutRequest): Observable<GetTxOutResponse | null> {
