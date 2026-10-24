@@ -7,12 +7,24 @@ import {
   ValidateAddressRequest,
   ValidateAddressResponse,
 } from '../types/validate-address.interface';
+import {
+  EstimateSmartFeeRequest,
+  EstimateSmartFeeResponse,
+} from '../types/estimate-smart-fee.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilService {
   private readonly http = inject(HttpClient);
+
+  estimateSmartFee(request: EstimateSmartFeeRequest): Observable<EstimateSmartFeeResponse> {
+    return this.http.post<EstimateSmartFeeResponse>(`${BASE_URL}/estimatesmartfee`, {
+      conf_target: request.conf_target,
+      estimate_mode: request.estimate_mode ?? 'economical',
+      options: request.options,
+    });
+  }
 
   getDescriptorInfo(descriptor: string): Observable<GetDescriptorInfoResponse> {
     return this.http.post<GetDescriptorInfoResponse>(`${BASE_URL}/getdescriptorinfo`, {
