@@ -3,6 +3,10 @@ import { Observable } from 'rxjs';
 import { BASE_URL } from '../types/constants';
 import { HttpClient } from '@angular/common/http';
 import { CreateRawTransactionRequest } from '../types/create-raw-transaction.interface';
+import {
+  FundRawTransactionRequest,
+  FundRawTransactionResponse,
+} from '../types/fund-raw-transaction.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +20,14 @@ export class RawTransactionService {
       locktime: request.locktime ?? 0,
       replaceable: request.replaceable ?? true,
       version: request.version ?? 2,
+    });
+  }
+
+  fundRawTransaction(request: FundRawTransactionRequest): Observable<FundRawTransactionResponse> {
+    return this.http.post<FundRawTransactionResponse>(`${BASE_URL}/fundrawtransaction`, {
+      hexstring: request.hexstring,
+      options: request.options,
+      iswitness: request.iswitness,
     });
   }
 }
