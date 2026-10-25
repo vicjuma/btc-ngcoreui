@@ -48,6 +48,10 @@ import {
 } from '../types/list-transactions.interface';
 import { GetTransactionRequest, GetTransactionResponse } from '../types/get-transaction.interface';
 import { ListUnspentRequest, ListUnspentResponse } from '../types/list-unpent.interface';
+import {
+  WalletCreateFundedPsbtRequest,
+  WalletCreateFundedPsbtResponse,
+} from '../types/wallet-create-funded-psbt.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -201,5 +205,19 @@ export class WalletService {
 
   listWallets(): Observable<ListWalletsResponse> {
     return this.http.get<ListWalletsResponse>(`${BASE_URL}/listwallets`);
+  }
+
+  walletCreateFundedPsbt(
+    request: WalletCreateFundedPsbtRequest,
+  ): Observable<WalletCreateFundedPsbtResponse> {
+    return this.http.post<WalletCreateFundedPsbtResponse>(`${BASE_URL}/walletcreatefundedpsbt`, {
+      inputs: request.inputs,
+      outputs: request.outputs,
+      locktime: request.locktime ?? 0,
+      options: request.options,
+      bip32derivs: request.bip32derivs ?? true,
+      version: request.version ?? 2,
+      psbt_version: request.psbt_version ?? 2,
+    });
   }
 }
