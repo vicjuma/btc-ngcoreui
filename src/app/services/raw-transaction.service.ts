@@ -7,6 +7,7 @@ import {
   FundRawTransactionRequest,
   FundRawTransactionResponse,
 } from '../types/fund-raw-transaction.interface';
+import { CreatePsbtRequest } from '../types/create-psbt.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,17 @@ export class RawTransactionService {
       hexstring: request.hexstring,
       options: request.options,
       iswitness: request.iswitness,
+    });
+  }
+
+  createPsbt(request: CreatePsbtRequest): Observable<string> {
+    return this.http.post<string>(`${BASE_URL}/createpsbt`, {
+      inputs: request.inputs,
+      outputs: request.outputs,
+      locktime: request.locktime ?? 0,
+      replaceable: request.replaceable ?? true,
+      version: request.version ?? 2,
+      psbt_version: request.psbt_version ?? 2,
     });
   }
 }
