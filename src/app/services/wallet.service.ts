@@ -52,6 +52,10 @@ import {
   WalletCreateFundedPsbtRequest,
   WalletCreateFundedPsbtResponse,
 } from '../types/wallet-create-funded-psbt.interface';
+import {
+  SimulateRawTransactionRequest,
+  SimulateRawTransactionResponse,
+} from '../types/simulate-raw-transaction.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -205,6 +209,15 @@ export class WalletService {
 
   listWallets(): Observable<ListWalletsResponse> {
     return this.http.get<ListWalletsResponse>(`${BASE_URL}/listwallets`);
+  }
+
+  simulateRawTransaction(
+    request: SimulateRawTransactionRequest,
+  ): Observable<SimulateRawTransactionResponse> {
+    return this.http.post<SimulateRawTransactionResponse>(`${BASE_URL}/simulaterawtransaction`, {
+      rawtxs: request.rawtxs,
+      options: request.options,
+    });
   }
 
   walletCreateFundedPsbt(
