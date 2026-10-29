@@ -13,12 +13,17 @@ import {
   DescriptorProcessPsbtRequest,
   DescriptorProcessPsbtResponse,
 } from '../types/descriptor-process-psbt.interface';
+import { AnalyzePsbtRequest, AnalyzePsbtResponse } from '../types/analyze-psbt.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RawTransactionService {
   private readonly http = inject(HttpClient);
+
+  analyzePsbt(request: AnalyzePsbtRequest): Observable<AnalyzePsbtResponse> {
+    return this.http.post<AnalyzePsbtResponse>(`${BASE_URL}/analyzepsbt`, request);
+  }
 
   createPsbt(request: CreatePsbtRequest): Observable<string> {
     return this.http.post<string>(`${BASE_URL}/createpsbt`, {
