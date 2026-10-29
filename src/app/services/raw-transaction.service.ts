@@ -8,6 +8,7 @@ import {
   FundRawTransactionResponse,
 } from '../types/fund-raw-transaction.interface';
 import { CreatePsbtRequest } from '../types/create-psbt.interface';
+import { UtxoUpdatePsbtRequest, UtxoUpdatePsbtResponse } from '../types/utxo-update-psbt.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -41,5 +42,9 @@ export class RawTransactionService {
       version: request.version ?? 2,
       psbt_version: request.psbt_version ?? 2,
     });
+  }
+
+  utxoUpdatePsbt(request: UtxoUpdatePsbtRequest): Observable<UtxoUpdatePsbtResponse> {
+    return this.http.post<UtxoUpdatePsbtResponse>(`${BASE_URL}/utxoupdatepsbt`, request);
   }
 }
