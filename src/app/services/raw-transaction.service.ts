@@ -14,6 +14,10 @@ import {
   DescriptorProcessPsbtResponse,
 } from '../types/descriptor-process-psbt.interface';
 import { AnalyzePsbtRequest, AnalyzePsbtResponse } from '../types/analyze-psbt.interface';
+import {
+  TestMempoolAcceptRequest,
+  TestMempoolAcceptResponse,
+} from '../types/test-mempool-accept.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +67,13 @@ export class RawTransactionService {
       hexstring: request.hexstring,
       options: request.options,
       iswitness: request.iswitness,
+    });
+  }
+
+  testMempoolAccept(request: TestMempoolAcceptRequest): Observable<TestMempoolAcceptResponse> {
+    return this.http.post<TestMempoolAcceptResponse>(`${BASE_URL}/testmempoolaccept`, {
+      rawtxs: request.rawtxs,
+      maxfeerate: request.maxfeerate,
     });
   }
 
