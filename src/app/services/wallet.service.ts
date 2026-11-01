@@ -56,6 +56,10 @@ import {
   SimulateRawTransactionRequest,
   SimulateRawTransactionResponse,
 } from '../types/simulate-raw-transaction.interface';
+import {
+  WalletProcessPsbtRequest,
+  WalletProcessPsbtResponse,
+} from '../types/wallet-process-psbt.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -231,6 +235,16 @@ export class WalletService {
       bip32derivs: request.bip32derivs ?? true,
       version: request.version ?? 2,
       psbt_version: request.psbt_version ?? 2,
+    });
+  }
+
+  walletProcessPsbt(request: WalletProcessPsbtRequest): Observable<WalletProcessPsbtResponse> {
+    return this.http.post<WalletProcessPsbtResponse>(`${BASE_URL}/walletprocesspsbt`, {
+      psbt: request.psbt,
+      sign: request.sign ?? true,
+      sighashtype: request.sighashtype,
+      bip32derivs: request.bip32derivs ?? true,
+      finalize: request.finalize ?? true,
     });
   }
 }
