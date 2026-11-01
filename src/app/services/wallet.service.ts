@@ -60,6 +60,10 @@ import {
   WalletProcessPsbtRequest,
   WalletProcessPsbtResponse,
 } from '../types/wallet-process-psbt.interface';
+import {
+  SignRawTransactionWithWalletRequest,
+  SignRawTransactionWithWalletResponse,
+} from '../types/sign-raw-transaction-with-wallet.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -213,6 +217,19 @@ export class WalletService {
 
   listWallets(): Observable<ListWalletsResponse> {
     return this.http.get<ListWalletsResponse>(`${BASE_URL}/listwallets`);
+  }
+
+  signRawTransactionWithWallet(
+    request: SignRawTransactionWithWalletRequest,
+  ): Observable<SignRawTransactionWithWalletResponse> {
+    return this.http.post<SignRawTransactionWithWalletResponse>(
+      `${BASE_URL}/signrawtransactionwithwallet`,
+      {
+        hexstring: request.hexstring,
+        prevtxs: request.prevtxs,
+        sighashtype: request.sighashtype,
+      },
+    );
   }
 
   simulateRawTransaction(
