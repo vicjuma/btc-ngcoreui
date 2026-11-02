@@ -18,6 +18,10 @@ import {
   TestMempoolAcceptRequest,
   TestMempoolAcceptResponse,
 } from '../types/test-mempool-accept.interface';
+import {
+  SignRawTransactionWithKeyRequest,
+  SignRawTransactionWithKeyResponse,
+} from '../types/sign-raw-transaction-with-key.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -68,6 +72,20 @@ export class RawTransactionService {
       options: request.options,
       iswitness: request.iswitness,
     });
+  }
+
+  signRawTransactionWithKey(
+    request: SignRawTransactionWithKeyRequest,
+  ): Observable<SignRawTransactionWithKeyResponse> {
+    return this.http.post<SignRawTransactionWithKeyResponse>(
+      `${BASE_URL}/signrawtransactionwithkey`,
+      {
+        hexstring: request.hexstring,
+        privkeys: request.privkeys,
+        prevtxs: request.prevtxs,
+        sighashtype: request.sighashtype,
+      },
+    );
   }
 
   testMempoolAccept(request: TestMempoolAcceptRequest): Observable<TestMempoolAcceptResponse> {
