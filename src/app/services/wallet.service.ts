@@ -64,6 +64,10 @@ import {
   SignRawTransactionWithWalletRequest,
   SignRawTransactionWithWalletResponse,
 } from '../types/sign-raw-transaction-with-wallet.interface';
+import {
+  WalletDisplayAddressRequest,
+  WalletDisplayAddressResponse,
+} from '../types/wallet-display-address.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -253,6 +257,15 @@ export class WalletService {
       version: request.version ?? 2,
       psbt_version: request.psbt_version ?? 2,
     });
+  }
+
+  walletDisplayAddress(
+    request: WalletDisplayAddressRequest,
+  ): Observable<WalletDisplayAddressResponse> {
+    return this.http.post<WalletDisplayAddressResponse>(
+      `${BASE_URL}/walletdisplayaddress`,
+      request.address,
+    );
   }
 
   walletProcessPsbt(request: WalletProcessPsbtRequest): Observable<WalletProcessPsbtResponse> {
