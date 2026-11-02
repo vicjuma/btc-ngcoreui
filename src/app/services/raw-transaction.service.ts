@@ -22,6 +22,7 @@ import {
   SignRawTransactionWithKeyRequest,
   SignRawTransactionWithKeyResponse,
 } from '../types/sign-raw-transaction-with-key.interface';
+import { EnumerateSignersResponse } from '../types/enumerate-signers.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -64,6 +65,10 @@ export class RawTransactionService {
       bip32derivs: request.bip32derivs ?? true,
       finalize: request.finalize ?? true,
     });
+  }
+
+  enumerateSigners(): Observable<EnumerateSignersResponse> {
+    return this.http.get<EnumerateSignersResponse>(`${BASE_URL}/enumeratesigners`);
   }
 
   fundRawTransaction(request: FundRawTransactionRequest): Observable<FundRawTransactionResponse> {
