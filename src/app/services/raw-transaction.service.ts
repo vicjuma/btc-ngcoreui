@@ -24,6 +24,7 @@ import {
 } from '../types/sign-raw-transaction-with-key.interface';
 import { EnumerateSignersResponse } from '../types/enumerate-signers.interface';
 import { CombinePsbtRequest, CombinePsbtResponse } from '../types/combine-psbt.interface';
+import { JoinPsbtsRequest, JoinPsbtsResponse } from '../types/join-psbts.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -82,6 +83,10 @@ export class RawTransactionService {
       options: request.options,
       iswitness: request.iswitness,
     });
+  }
+
+  joinPsbts(request: JoinPsbtsRequest): Observable<JoinPsbtsResponse> {
+    return this.http.post<JoinPsbtsResponse>(`${BASE_URL}/joinpsbts`, request);
   }
 
   signRawTransactionWithKey(
