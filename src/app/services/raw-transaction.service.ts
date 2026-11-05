@@ -23,6 +23,7 @@ import {
   SignRawTransactionWithKeyResponse,
 } from '../types/sign-raw-transaction-with-key.interface';
 import { EnumerateSignersResponse } from '../types/enumerate-signers.interface';
+import { CombinePsbtRequest, CombinePsbtResponse } from '../types/combine-psbt.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,10 @@ export class RawTransactionService {
 
   analyzePsbt(request: AnalyzePsbtRequest): Observable<AnalyzePsbtResponse> {
     return this.http.post<AnalyzePsbtResponse>(`${BASE_URL}/analyzepsbt`, request);
+  }
+
+  combinePsbt(request: CombinePsbtRequest): Observable<CombinePsbtResponse> {
+    return this.http.post<CombinePsbtResponse>(`${BASE_URL}/combinepsbt`, request);
   }
 
   createPsbt(request: CreatePsbtRequest): Observable<string> {
